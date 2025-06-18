@@ -17,7 +17,12 @@ class OnboardingScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Image.asset(AppImages.world),
+            Image.asset(
+              AppImages.world,
+              height: (MediaQuery.of(context).size.height / 2).h,
+              width: double.infinity,
+              fit: BoxFit.fill,
+            ),
             Expanded(
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
@@ -40,9 +45,9 @@ class OnboardingScreen extends StatelessWidget {
                               width: 9.w,
                               decoration: BoxDecoration(
                                 color:
-                                index == 1
-                                    ? AppColors.iris
-                                    : AppColors.cultured,
+                                    index == 1
+                                        ? AppColors.iris
+                                        : AppColors.cultured,
                                 shape: BoxShape.circle,
                               ),
                             );
@@ -51,13 +56,13 @@ class OnboardingScreen extends StatelessWidget {
                         2.ph,
                         AppText(
                           title:
-                          'Explore global map of wind, weather, and ocean conditions',
+                              'Explore global map of wind, weather, and ocean conditions',
                           maxLines: 3,
                         ),
                         5.ph,
                         AppText(
                           title:
-                          'Planing your trip become more easier with ideate weather app. You can instantly see the whole word weather within few second',
+                              'Planing your trip become more easier with ideate weather app. You can instantly see the whole word weather within few second',
                           maxLines: 10,
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -65,9 +70,9 @@ class OnboardingScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    5.ph,
+                    10.ph,
                     Flexible(child: SvgPicture.asset(AppIcons.sun)),
-                    5.ph,
+                    10.ph,
                     MyTextButton(
                       onTap: () {
                         Navigator.pushReplacementNamed(context, Routes.home);

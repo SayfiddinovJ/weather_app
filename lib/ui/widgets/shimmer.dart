@@ -20,13 +20,17 @@ class AppShimmer extends StatelessWidget {
     return Shimmer.fromColors(
       baseColor: AppColors.cultured,
       highlightColor: AppColors.platinum,
-      child: Container(
-        height: height.h,
-        width: width.w,
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(shape.r),
-        ),
+      child: Column(
+        children: [
+          Container(
+            height: height.h,
+            width: width.w,
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(shape.r),
+            ),
+          ),
+        ],
       ),
     );
   }
