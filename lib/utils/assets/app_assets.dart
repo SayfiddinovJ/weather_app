@@ -24,3 +24,5 @@ class AppImages {
       'assets/images/container_bg_purple.png';
   static const String world = 'assets/images/world.png';
 }
+
+const String fontFamily = 'Ubuntu';
