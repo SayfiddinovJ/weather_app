@@ -1,19 +1,32 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/ui/details/details_screen.dart';
+import 'package:weather_app/ui/forecast/forecast_screen.dart';
 import 'package:weather_app/ui/home/home_screen.dart';
-import 'package:weather_app/ui/onboarding/onboarding_screen.dart';
+import 'package:weather_app/ui/settings/settings_screen.dart';
+import 'package:weather_app/ui/splash/splash_screen.dart';
 
 class Routes {
-  static const onboarding = '/';
+  static const splash = '/';
   static const home = '/home';
+  static const forecast = '/forecast';
+  static const details = '/details';
+  static const settings = '/settings';
 }
 
 class Pages {
   static Route<dynamic> onGeneratingRoute(RouteSettings settings) {
     switch (settings.name) {
-      case Routes.onboarding:
-        return MaterialPageRoute(builder: (context) => OnboardingScreen());
+      case Routes.splash:
+        return CupertinoPageRoute(builder: (context) => const SplashScreen());
       case Routes.home:
-        return MaterialPageRoute(builder: (context) => HomeScreen());
+        return CupertinoPageRoute(builder: (context) => const HomeScreen());
+      case Routes.forecast:
+        return CupertinoPageRoute(builder: (context) => const ForecastScreen());
+      case Routes.details:
+        return CupertinoPageRoute(builder: (context) => const DetailsScreen());
+      case Routes.settings:
+        return CupertinoPageRoute(builder: (context) => const SettingsScreen());
       default:
         return _errorRoute();
     }
