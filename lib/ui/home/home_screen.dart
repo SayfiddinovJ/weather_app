@@ -36,96 +36,101 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: Center(
-          child: RefreshIndicator(
-            semanticsLabel: 'Pull to refresh',
-            semanticsValue: 'Refresh',
-            color: AppColors.gray,
-            displacement: 0,
-            edgeOffset: 0,
-            backgroundColor: Colors.transparent,
-            strokeWidth: 2,
-            onRefresh: () async {
-              await Future.delayed(const Duration(seconds: 2));
-            },
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.details);
-                },
-                child: Column(
-                  children: [
-                    20.ph,
-                    Text(
-                      'Friday, 25 December 2020',
-                      style: TextStyle(fontSize: 18.sp, color: AppColors.gray),
-                    ),
-                    20.ph,
-                    Text('24°c', style: TextStyle(fontSize: 100.sp)),
-                    10.ph,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.arrow_downward,
+        child: RefreshIndicator(
+          semanticsLabel: 'Pull to refresh',
+          semanticsValue: 'Refresh',
+          color: AppColors.gray,
+          displacement: 0,
+          edgeOffset: 0,
+          strokeWidth: 2,
+          onRefresh: () async {
+            await Future.delayed(const Duration(seconds: 2));
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, Routes.details);
+              },
+              child: Column(
+                children: [
+                  30.ph,
+                  Text(
+                    'Friday, 25 December 2020',
+                    style: TextStyle(fontSize: 18.sp, color: AppColors.gray),
+                  ),
+                  20.ph,
+                  Text('24°c', style: TextStyle(fontSize: 100.sp)),
+                  10.ph,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.arrow_downward,
+                        color: AppColors.gray,
+                        size: 21.w,
+                      ),
+                      Text(
+                        '16°C',
+                        style: TextStyle(
+                          fontSize: 21.sp,
                           color: AppColors.gray,
-                          size: 21.w,
                         ),
-                        Text(
-                          '16°C',
-                          style: TextStyle(
-                            fontSize: 21.sp,
-                            color: AppColors.gray,
-                          ),
-                        ),
-                        20.pw,
-                        Icon(
-                          Icons.arrow_upward,
+                      ),
+                      20.pw,
+                      Icon(
+                        Icons.arrow_upward,
+                        color: AppColors.gray,
+                        size: 21.w,
+                      ),
+                      Text(
+                        '26°C',
+                        style: TextStyle(
+                          fontSize: 21.sp,
                           color: AppColors.gray,
-                          size: 21.w,
                         ),
-                        Text(
-                          '26°C',
-                          style: TextStyle(
-                            fontSize: 21.sp,
-                            color: AppColors.gray,
-                          ),
-                        ),
-                      ],
+                      ),
+                    ],
+                  ),
+                  20.ph,
+                  SvgPicture.asset(
+                    AppIcons.dayRain,
+                    colorFilter: ColorFilter.mode(
+                      Theme.of(context).iconTheme.color!,
+                      BlendMode.srcIn,
                     ),
-                    20.ph,
-                    Icon(Icons.cloudy_snowing, size: 128.w),
-                    20.ph,
-                    Text(
-                      'Light Drizzle',
-                      style: TextStyle(fontSize: 18.sp, color: AppColors.gray),
-                    ),
-                    20.ph,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(AppIcons.sunrise),
-                        Text(
-                          ' 09:18 AM',
-                          style: TextStyle(
-                            fontSize: 21.sp,
-                            color: AppColors.gray,
-                          ),
+                    height: 150.w,
+                    width: 150.w,
+                  ),
+                  20.ph,
+                  Text(
+                    'Light Drizzle',
+                    style: TextStyle(fontSize: 18.sp, color: AppColors.gray),
+                  ),
+                  20.ph,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(AppIcons.sunrise),
+                      Text(
+                        ' 09:18 AM',
+                        style: TextStyle(
+                          fontSize: 21.sp,
+                          color: AppColors.gray,
                         ),
-                        20.pw,
-                        SvgPicture.asset(AppIcons.sunset),
-                        Text(
-                          ' 06:32 PM',
-                          style: TextStyle(
-                            fontSize: 21.sp,
-                            color: AppColors.gray,
-                          ),
+                      ),
+                      20.pw,
+                      SvgPicture.asset(AppIcons.sunset),
+                      Text(
+                        ' 06:32 PM',
+                        style: TextStyle(
+                          fontSize: 21.sp,
+                          color: AppColors.gray,
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
