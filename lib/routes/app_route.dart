@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/ui/details/details_screen.dart';
 import 'package:weather_app/ui/forecast/forecast_screen.dart';
 import 'package:weather_app/ui/home/home_screen.dart';
+import 'package:weather_app/ui/locations/locations_screen.dart';
 import 'package:weather_app/ui/settings/settings_screen.dart';
 import 'package:weather_app/ui/splash/splash_screen.dart';
 
@@ -12,6 +13,7 @@ class Routes {
   static const forecast = '/forecast';
   static const details = '/details';
   static const settings = '/settings';
+  static const locations = '/locations';
 }
 
 class Pages {
@@ -27,6 +29,10 @@ class Pages {
         return CupertinoPageRoute(builder: (context) => const DetailsScreen());
       case Routes.settings:
         return CupertinoPageRoute(builder: (context) => const SettingsScreen());
+      case Routes.locations:
+        return CupertinoPageRoute(
+          builder: (context) => const LocationsScreen(),
+        );
       default:
         return _errorRoute();
     }

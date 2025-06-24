@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:weather_app/routes/app_route.dart';
 import 'package:weather_app/ui/forecast/widgets/daily_item.dart';
 import 'package:weather_app/ui/forecast/widgets/hourly_item.dart';
 import 'package:weather_app/utils/extensions/extension.dart';
@@ -31,11 +32,15 @@ class ForecastScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.locations);
+            },
             icon: const Icon(Icons.map_outlined, color: AppColors.gray),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.settings);
+            },
             icon: const Icon(Icons.settings, color: AppColors.gray),
           ),
           10.pw,
@@ -89,7 +94,12 @@ class ForecastScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  child: DailyItem(title: '$index Jun', icon: AppIcons.rain,highTemp: '26',lowTemp: '16',),
+                  child: DailyItem(
+                    title: '$index Jun',
+                    icon: AppIcons.rain,
+                    highTemp: '26',
+                    lowTemp: '16',
+                  ),
                 );
               },
             ),

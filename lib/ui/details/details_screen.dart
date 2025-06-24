@@ -30,11 +30,15 @@ class DetailsScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.locations);
+            },
             icon: const Icon(Icons.map_outlined, color: AppColors.gray),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.settings);
+            },
             icon: const Icon(Icons.settings, color: AppColors.gray),
           ),
           10.pw,
