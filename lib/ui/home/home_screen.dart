@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
               },
               child: Column(
                 children: [
-                  30.ph,
+                  50.ph,
                   Text(
                     'Friday, 25 December 2020',
                     style: TextStyle(fontSize: 18.sp, color: AppColors.gray),

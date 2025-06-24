@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:weather_app/routes/app_route.dart';
 import 'package:weather_app/ui/details/widgets/details_text.dart';
 import 'package:weather_app/utils/extensions/extension.dart';
 import 'package:weather_app/utils/theme/app_theme.dart';
@@ -39,7 +40,7 @@ class DetailsScreen extends StatelessWidget {
           10.pw,
         ],
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: EdgeInsetsGeometry.symmetric(vertical: 24.h, horizontal: 24.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,9 +50,14 @@ class DetailsScreen extends StatelessWidget {
               children: [
                 Text('Details', style: TextStyle(fontSize: 24.sp)),
                 const Spacer(),
-                Text(
-                  'Forecast',
-                  style: TextStyle(fontSize: 24.sp, color: AppColors.gray),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.forecast);
+                  },
+                  child: Text(
+                    'Forecast',
+                    style: TextStyle(fontSize: 24.sp, color: AppColors.gray),
+                  ),
                 ),
               ],
             ),
