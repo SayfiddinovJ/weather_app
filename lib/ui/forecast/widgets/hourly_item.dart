@@ -14,7 +14,15 @@ class HourlyItem extends StatelessWidget {
     return Column(
       children: [
         Text(title, style: TextStyle(fontSize: 16.sp, color: AppColors.gray)),
-        SvgPicture.asset(icon, height: 30.w, width: 30.w),
+        SvgPicture.asset(
+          icon,
+          height: 30.w,
+          width: 30.w,
+          colorFilter: ColorFilter.mode(
+            Theme.of(context).iconTheme.color!,
+            BlendMode.srcIn,
+          ),
+        ),
       ],
     );
   }

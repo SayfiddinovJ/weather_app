@@ -23,19 +23,27 @@ class DailyItem extends StatelessWidget {
     return Column(
       children: [
         Text(title, style: TextStyle(fontSize: 16.sp)),
-        SvgPicture.asset(icon, height: 30.w, width: 30.w),
+        SvgPicture.asset(
+          icon,
+          height: 30.w,
+          width: 30.w,
+          colorFilter: ColorFilter.mode(
+            Theme.of(context).iconTheme.color!,
+            BlendMode.srcIn,
+          ),
+        ),
         5.ph,
         Row(
           children: [
-            Icon(Icons.arrow_upward, size: 16.sp,color: AppColors.gray),
-            Text('$highTemp°C',style: TextStyle(color: AppColors.gray),),
+            Icon(Icons.arrow_upward, size: 16.sp, color: AppColors.gray),
+            Text('$highTemp°C', style: TextStyle(color: AppColors.gray)),
           ],
         ),
         5.ph,
         Row(
           children: [
-            Icon(Icons.arrow_downward, size: 16.sp,color: AppColors.gray,),
-            Text('$lowTemp°C',style: TextStyle(color: AppColors.gray),),
+            Icon(Icons.arrow_downward, size: 16.sp, color: AppColors.gray),
+            Text('$lowTemp°C', style: TextStyle(color: AppColors.gray)),
           ],
         ),
       ],
