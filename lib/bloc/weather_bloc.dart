@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/bloc/weather_event.dart';
 import 'package:weather_app/bloc/weather_state.dart';
-import 'package:weather_app/data/models/condition_model.dart';
-import 'package:weather_app/data/models/current_model.dart';
-import 'package:weather_app/data/models/location_model.dart';
-import 'package:weather_app/data/models/weather_model.dart';
+import 'package:weather_app/data/models/weather/condition_model.dart';
+import 'package:weather_app/data/models/weather/current_model.dart';
+import 'package:weather_app/data/models/weather/location_model.dart';
+import 'package:weather_app/data/models/weather/weather_model.dart';
 import 'package:weather_app/data/status.dart';
 import 'package:weather_app/data/universal_data.dart';
 import 'package:weather_app/repository/weather_repository.dart';

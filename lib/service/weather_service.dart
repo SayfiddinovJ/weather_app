@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:weather_app/data/models/weather_model.dart';
+import 'package:weather_app/data/models/weather/weather_model.dart';
 import 'package:weather_app/data/universal_data.dart';
 import 'package:weather_app/utils/constants/constants.dart';
 

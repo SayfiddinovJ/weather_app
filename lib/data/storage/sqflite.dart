@@ -1,6 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:weather_app/data/models/model_fields.dart';
+import 'package:weather_app/data/models/weather/model_fields.dart';
 
 class LocalDatabase {
   static final LocalDatabase getInstance = LocalDatabase._init();

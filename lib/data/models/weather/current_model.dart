@@ -1,4 +1,4 @@
-import 'package:weather_app/data/models/condition_model.dart';
+import 'package:weather_app/data/models/weather/condition_model.dart';
 
 class CurrentModel {
   final String lastUpdatedEpoch;
