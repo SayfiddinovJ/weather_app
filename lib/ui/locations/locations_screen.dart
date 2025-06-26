@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:weather_app/bloc/weather_bloc.dart';
+import 'package:weather_app/bloc/weather_event.dart';
+import 'package:weather_app/bloc/weather_state.dart';
+import 'package:weather_app/data/status.dart';
 import 'package:weather_app/ui/locations/widgets/locations_item.dart';
-import 'package:weather_app/utils/icons/app_icons.dart';
 import 'package:weather_app/utils/theme/app_theme.dart';
 
 class LocationsScreen extends StatelessWidget {
@@ -26,29 +30,39 @@ class LocationsScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            LocationsItem(
-              title: 'New York',
-              subtitle: 'United States',
-              temp: '23°C',
-              icon: AppIcons.rain,
-            ),
-            LocationsItem(
-              title: 'London',
-              subtitle: 'United Kingdom',
-              temp: '23°C',
-              icon: AppIcons.cloud,
-            ),
-            LocationsItem(
-              title: 'Tokyo',
-              subtitle: 'Japan',
-              temp: '23°C',
-              icon: AppIcons.daySunny,
-            ),
-          ],
-        ),
+      body: BlocBuilder<WeatherBloc, WeatherState>(
+        builder: (context, state) {
+          if (state.status == Status.loading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state.status == Status.error) {
+            return Center(child: Text(state.error));
+          } else if (state.status == Status.success) {
+            return ListView.builder(
+              itemCount: state.countries.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20.w,
+                    vertical: 10.h,
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      context.read<WeatherBloc>().add(GetWeatherEvent());
+                      Navigator.pop(context);
+                    },
+                    child: LocationsItem(
+                      title: state.countryModel.countryName,
+                      isSelected: false,
+                      onTap: () {},
+                    ),
+                  ),
+                );
+              },
+            );
+          } else {
+            return const Center(child: Text(''));
+          }
+        },
       ),
     );
   }

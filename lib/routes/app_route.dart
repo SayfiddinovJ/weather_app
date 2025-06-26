@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/ui/details/details_screen.dart';
 import 'package:weather_app/ui/forecast/forecast_screen.dart';
 import 'package:weather_app/ui/home/home_screen.dart';
+import 'package:weather_app/ui/locations/location_add/location_add_screen.dart';
 import 'package:weather_app/ui/locations/locations_screen.dart';
 import 'package:weather_app/ui/settings/settings_screen.dart';
+import 'package:weather_app/ui/add/city_add.dart';
 import 'package:weather_app/ui/splash/splash_screen.dart';
 
 class Routes {
@@ -14,6 +16,8 @@ class Routes {
   static const details = '/details';
   static const settings = '/settings';
   static const locations = '/locations';
+  static const locationAdd = '/location_add';
+  static const cityAdd = '/city_add';
 }
 
 class Pages {
@@ -33,6 +37,12 @@ class Pages {
         return CupertinoPageRoute(
           builder: (context) => const LocationsScreen(),
         );
+      case Routes.locationAdd:
+        return CupertinoPageRoute(
+          builder: (context) => const LocationAddScreen(),
+        );
+      case Routes.cityAdd:
+        return CupertinoPageRoute(builder: (context) => const CityAddScreen());
       default:
         return _errorRoute();
     }

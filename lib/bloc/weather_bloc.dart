@@ -1,11 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/bloc/weather_event.dart';
 import 'package:weather_app/bloc/weather_state.dart';
+import 'package:weather_app/data/models/country/country_model.dart';
+import 'package:weather_app/data/models/country/region_model.dart';
 import 'package:weather_app/data/models/weather/condition_model.dart';
 import 'package:weather_app/data/models/weather/current_model.dart';
 import 'package:weather_app/data/models/weather/location_model.dart';
 import 'package:weather_app/data/models/weather/weather_model.dart';
 import 'package:weather_app/data/status.dart';
+import 'package:weather_app/data/storage/storage_repo.dart';
 import 'package:weather_app/data/universal_data.dart';
 import 'package:weather_app/repository/weather_repository.dart';
 
@@ -54,9 +57,26 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
               gustKph: 0,
             ),
           ),
+          countryModel: CountryModel(
+            countryName: '',
+            countryShortCode: '',
+            regions: [],
+          ),
+          cityName: '',
+          countries: [],
+          selectedCountry: CountryModel(
+            countryName: '',
+            countryShortCode: '',
+            regions: [],
+          ),
+          selectedRegion: RegionModel(name: '', shortCode: ''),
+          storageList: [],
         ),
       ) {
     on<WeatherEvent>((event, emit) {});
+    on<GetWeatherEvent>(getCurrentWeather);
+    on<GetCountriesFromStorageEvent>(getCountriesFromStorage);
+    on<GetCountriesFromJsonEvent>(getCountriesFromJson);
   }
 
   Future<void> getCurrentWeather(
@@ -64,11 +84,45 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     Emitter<WeatherState> emit,
   ) async {
     emit(state.copyWith(status: Status.loading));
-    UniversalData data = await weatherRepository.getWeather(event.cityName);
+    String cityName = StorageRepository.getString('cityName');
+    UniversalData data = await weatherRepository.getWeather(cityName);
     if (data.error.isEmpty) {
       emit(state.copyWith(status: Status.success, weather: data.data!));
     } else {
       emit(state.copyWith(status: Status.error, error: data.error));
     }
+  }
+
+  Future<void> getCountriesFromStorage(
+    GetCountriesFromStorageEvent event,
+    Emitter<WeatherState> emit,
+  ) async {
+    emit(state.copyWith(status: Status.loading));
+    UniversalData data = await weatherRepository.getCountriesFromStorage();
+    if (data.error.isEmpty) {
+      emit(state.copyWith(status: Status.success, storageList: data.data!));
+    } else {
+      emit(state.copyWith(status: Status.error, error: data.error));
+    }
+  }
+
+  Future<void> getCountriesFromJson(
+    GetCountriesFromJsonEvent event,
+    Emitter<WeatherState> emit,
+  ) async {
+    emit(state.copyWith(status: Status.loading));
+    UniversalData data = await weatherRepository.getCountriesFromJson();
+    if (data.error.isEmpty) {
+      emit(state.copyWith(status: Status.success, countries: data.data!));
+    } else {
+      emit(state.copyWith(status: Status.error, error: data.error));
+    }
+  }
+
+  Future<void> selectCountry(
+    SelectCountryEvent event,
+    Emitter<WeatherState> emit,
+  ) async {
+    emit(state.copyWith(selectedCountry: event.country));
   }
 }

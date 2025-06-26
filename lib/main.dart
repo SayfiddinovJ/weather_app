@@ -30,13 +30,18 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => WeatherRepository(weatherService),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(
+          create:
+              (context) => WeatherRepository(weatherService: weatherService),
+        ),
+      ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider.value(value: themeCubit),
           BlocProvider(
-            create: (_) => WeatherBloc(context.read<WeatherRepository>()),
+            create: (context) => WeatherBloc(context.read<WeatherRepository>()),
           ),
         ],
         child: const MyApp(),
