@@ -9,7 +9,7 @@ class WeatherService {
   Future<UniversalData> getCurrentWeather(String city) async {
     try {
       Response response = await dio
-          .get('$baseUrl+current.json?q=$city&key=$apiKey')
+          .get('$baseUrl/current.json?q=$city&key=$apiKey')
           .timeout(Duration(seconds: 30));
       if (response.statusCode == 200) {
         return UniversalData(data: WeatherModel.fromJson(response.data));

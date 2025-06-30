@@ -1,13 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:weather_app/bloc/weather_bloc.dart';
+import 'package:weather_app/bloc/weather_event.dart';
+import 'package:weather_app/bloc/weather_state.dart';
+import 'package:weather_app/data/models/weather/weather_model.dart';
+import 'package:weather_app/data/status.dart';
 import 'package:weather_app/routes/app_route.dart';
+import 'package:weather_app/ui/home/widgets/dawn_up_ward.dart';
+import 'package:weather_app/ui/home/widgets/sun_rise_set.dart';
+import 'package:weather_app/ui/widgets/app_bar_actions.dart';
 import 'package:weather_app/utils/extensions/extension.dart';
-import 'package:weather_app/utils/icons/app_icons.dart';
 import 'package:weather_app/utils/theme/app_theme.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  _init() {
+    BlocProvider.of<WeatherBloc>(context).add(GetWeatherEvent());
+  }
+
+  @override
+  void initState() {
+    _init();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,28 +39,17 @@ class HomeScreen extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('City name', style: TextStyle(fontSize: 18.sp)),
+            Text(
+              context.read<WeatherBloc>().state.weather.locationModel.name,
+              style: TextStyle(fontSize: 18.sp),
+            ),
             Text(
               'Current location',
               style: TextStyle(fontSize: 10.sp, color: AppColors.gray),
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.locations);
-            },
-            icon: const Icon(Icons.map_outlined, color: AppColors.gray),
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.settings);
-            },
-            icon: const Icon(Icons.settings, color: AppColors.gray),
-          ),
-          10.pw,
-        ],
+        actions: [AppBarActions()],
       ),
       body: SafeArea(
         child: RefreshIndicator(
@@ -48,95 +60,64 @@ class HomeScreen extends StatelessWidget {
           edgeOffset: 0,
           strokeWidth: 2,
           onRefresh: () async {
-            await Future.delayed(const Duration(seconds: 2));
+            context.read<WeatherBloc>().add(GetWeatherEvent());
           },
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, Routes.details);
-              },
-              child: Column(
-                children: [
-                  50.ph,
-                  Text(
-                    'Friday, 25 December 2020',
-                    style: TextStyle(fontSize: 18.sp, color: AppColors.gray),
-                  ),
-                  20.ph,
-                  Text('24°c', style: TextStyle(fontSize: 100.sp)),
-                  10.ph,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+          child: BlocBuilder<WeatherBloc, WeatherState>(
+            builder: (context, state) {
+              WeatherModel weather = state.weather;
+              if (state.status == Status.loading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state.status == Status.error) {
+                return Center(child: Text(state.error));
+              }
+              return SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.details);
+                  },
+                  child: Column(
                     children: [
-                      Icon(
-                        Icons.arrow_downward,
-                        color: AppColors.gray,
-                        size: 21.w,
-                      ),
+                      50.ph,
                       Text(
-                        '16°C',
+                        weather.locationModel.localtime,
                         style: TextStyle(
-                          fontSize: 21.sp,
+                          fontSize: 18.sp,
                           color: AppColors.gray,
                         ),
                       ),
-                      20.pw,
-                      Icon(
-                        Icons.arrow_upward,
-                        color: AppColors.gray,
-                        size: 21.w,
-                      ),
+                      20.ph,
                       Text(
-                        '26°C',
+                        '${weather.currentModel.tempC}°c',
+                        style: TextStyle(fontSize: 100.sp),
+                      ),
+                      10.ph,
+                      DawnUpWard(weather: weather),
+                      20.ph,
+                      Image.network(
+                        'https:${weather.currentModel.condition.icon}',
+                        height: 150.w,
+                        width: 150.w,
+                        fit: BoxFit.cover,
+                        errorBuilder: (c, o, s) {
+                          return Icon(Icons.photo, size: 150.w);
+                        },
+                      ),
+                      20.ph,
+                      Text(
+                        weather.currentModel.condition.text,
                         style: TextStyle(
-                          fontSize: 21.sp,
+                          fontSize: 18.sp,
                           color: AppColors.gray,
                         ),
                       ),
+                      20.ph,
+                      SunRiseSet(),
                     ],
                   ),
-                  20.ph,
-                  SvgPicture.asset(
-                    AppIcons.dayRain,
-                    colorFilter: ColorFilter.mode(
-                      Theme.of(context).iconTheme.color!,
-                      BlendMode.srcIn,
-                    ),
-                    height: 150.w,
-                    width: 150.w,
-                  ),
-                  20.ph,
-                  Text(
-                    'Light Drizzle',
-                    style: TextStyle(fontSize: 18.sp, color: AppColors.gray),
-                  ),
-                  20.ph,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(AppIcons.sunrise),
-                      Text(
-                        ' 09:18 AM',
-                        style: TextStyle(
-                          fontSize: 21.sp,
-                          color: AppColors.gray,
-                        ),
-                      ),
-                      20.pw,
-                      SvgPicture.asset(AppIcons.sunset),
-                      Text(
-                        ' 06:32 PM',
-                        style: TextStyle(
-                          fontSize: 21.sp,
-                          color: AppColors.gray,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
         ),
       ),

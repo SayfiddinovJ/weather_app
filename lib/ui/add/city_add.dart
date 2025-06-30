@@ -4,11 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/bloc/weather_event.dart';
 import 'package:weather_app/bloc/weather_state.dart';
-import 'package:weather_app/data/models/country/country_model.dart';
-import 'package:weather_app/data/models/country/region_model.dart';
 import 'package:weather_app/data/status.dart';
-import 'package:weather_app/ui/add/views/countries_view.dart';
-import 'package:weather_app/ui/add/views/regions_view.dart';
+import 'package:weather_app/ui/widgets/country_region_selector.dart';
 import 'package:weather_app/utils/theme/app_theme.dart';
 
 class CityAddScreen extends StatefulWidget {
@@ -41,8 +38,16 @@ class _CityAddScreenState extends State<CityAddScreen> {
           if (state.status == Status.loading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state.status == Status.success) {
-            return PageView(
-              children: [CountriesView(countries: state.countries),RegionsView(regions: [state.selectedRegion])],
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: CountryRegionSelector(
+                countries: state.countries,
+                onChanged: (countryName, region) {
+                  print(
+                    'Selected country: $countryName\nSelected region: $region',
+                  );
+                },
+              ),
             );
           } else {
             return Center(child: Text(state.error));

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:weather_app/bloc/weather_bloc.dart';
-import 'package:weather_app/bloc/weather_event.dart';
 import 'package:weather_app/data/storage/storage_repo.dart';
 import 'package:weather_app/routes/app_route.dart';
 import 'package:weather_app/utils/extensions/extension.dart';
@@ -15,9 +13,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  @override
+  void initState() {
+    _navigateHome(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    _navigateHome(context);
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -32,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 'A minimal weather app',
                 style: TextStyle(fontSize: 10.sp, color: AppColors.gray),
               ),
-              20.ph,
+              30.ph,
             ],
           ),
         ),

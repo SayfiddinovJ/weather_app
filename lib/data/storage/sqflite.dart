@@ -37,7 +37,6 @@ class LocalDatabase {
     await db.execute('''
     CREATE TABLE ${WeatherModelFields.dbTable} (
     ${WeatherModelFields.id} $idType,
-    ${WeatherModelFields.cityName} $textType,
     ${WeatherModelFields.region} $textType,
     ${WeatherModelFields.country} $textType
     )

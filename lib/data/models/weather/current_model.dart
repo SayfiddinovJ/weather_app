@@ -1,7 +1,7 @@
 import 'package:weather_app/data/models/weather/condition_model.dart';
 
 class CurrentModel {
-  final String lastUpdatedEpoch;
+  final int lastUpdatedEpoch;
   final String lastUpdated;
   final double tempC;
   final double tempF;

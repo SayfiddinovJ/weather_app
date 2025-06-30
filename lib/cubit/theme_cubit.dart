@@ -9,6 +9,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
 
   Future<void> loadTheme() async {
     final themeStr = StorageRepository.getString(_key);
+    print('themeStr: $themeStr');
 
     switch (themeStr) {
       case 'light':

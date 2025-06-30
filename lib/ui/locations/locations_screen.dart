@@ -5,6 +5,7 @@ import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/bloc/weather_event.dart';
 import 'package:weather_app/bloc/weather_state.dart';
 import 'package:weather_app/data/status.dart';
+import 'package:weather_app/routes/app_route.dart';
 import 'package:weather_app/ui/locations/widgets/locations_item.dart';
 import 'package:weather_app/utils/theme/app_theme.dart';
 
@@ -25,7 +26,10 @@ class LocationsScreen extends StatelessWidget {
         titleTextStyle: TextStyle(fontSize: 18.sp, color: AppColors.gray),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.read<WeatherBloc>().add(GetCountriesFromJsonEvent());
+              Navigator.pushNamed(context, Routes.locationAdd);
+            },
             icon: Icon(Icons.add, color: AppColors.gray),
           ),
         ],
