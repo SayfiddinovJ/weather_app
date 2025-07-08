@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/bloc/weather_event.dart';
 import 'package:weather_app/bloc/weather_state.dart';
 import 'package:weather_app/data/models/weather/weather_model.dart';
 import 'package:weather_app/data/status.dart';
+import 'package:weather_app/data/storage/storage_repo.dart';
 import 'package:weather_app/routes/app_route.dart';
 import 'package:weather_app/ui/home/widgets/dawn_up_ward.dart';
 import 'package:weather_app/ui/home/widgets/sun_rise_set.dart';
@@ -22,16 +22,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  _init() {
-    BlocProvider.of<WeatherBloc>(context).add(GetWeatherEvent());
-  }
-
-  @override
-  void initState() {
-    _init();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              context.read<WeatherBloc>().state.weather.locationModel.name,
+              StorageRepository.getString('cityName'),
               style: TextStyle(fontSize: 18.sp),
             ),
             Text(
@@ -68,7 +58,22 @@ class _HomeScreenState extends State<HomeScreen> {
               if (state.status == Status.loading) {
                 return const Center(child: CircularProgressIndicator());
               } else if (state.status == Status.error) {
-                return Center(child: Text(state.error));
+                return SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      200.ph,
+                      Center(child: Text(state.error)),
+                      10.ph,
+                      ElevatedButton(
+                        onPressed: () async {
+                          context.read<WeatherBloc>().add(GetWeatherEvent());
+                        },
+                        child: Text('Refresh'),
+                      ),
+                    ],
+                  ),
+                );
               }
               return SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:weather_app/data/models/country/country_model.dart';
-import 'package:weather_app/data/models/weather/model_fields.dart';
+import 'package:weather_app/data/models/storage/model_fields.dart';
 import 'package:weather_app/data/storage/sqflite.dart';
 import 'package:weather_app/data/universal_data.dart';
 import 'package:weather_app/service/weather_service.dart';

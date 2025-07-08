@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:weather_app/bloc/weather_bloc.dart';
+import 'package:weather_app/bloc/weather_event.dart';
 import 'package:weather_app/data/storage/storage_repo.dart';
 import 'package:weather_app/routes/app_route.dart';
 import 'package:weather_app/utils/extensions/extension.dart';
@@ -13,10 +16,19 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  _init() {
+    String cityName = StorageRepository.getString('cityName');
+    if (cityName.isNotEmpty) {
+      BlocProvider.of<WeatherBloc>(context).add(GetWeatherEvent());
+      _navigateHome(context, Routes.home);
+    } else {
+      _navigateHome(context, Routes.cityAdd);
+    }
+  }
 
   @override
   void initState() {
-    _navigateHome(context);
+    _init();
     super.initState();
   }
 
@@ -44,14 +56,9 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  _navigateHome(context) {
+  _navigateHome(context, route) {
     Future.delayed(const Duration(seconds: 2), () {
-      String cityName = StorageRepository.getString('cityName');
-      if (cityName.isEmpty) {
-        Navigator.pushReplacementNamed(context, Routes.cityAdd);
-      } else {
-        Navigator.pushReplacementNamed(context, Routes.home);
-      }
+      Navigator.pushReplacementNamed(context, route);
     });
   }
 }

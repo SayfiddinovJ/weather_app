@@ -12,7 +12,7 @@ import 'data/storage/storage_repo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  StorageRepository.getInstance();
+  await StorageRepository.getInstance();
   final themeCubit = ThemeCubit();
   await themeCubit.loadTheme();
   runApp(App(weatherService: WeatherService(), themeCubit: themeCubit));

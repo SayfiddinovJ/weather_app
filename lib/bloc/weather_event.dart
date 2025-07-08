@@ -1,6 +1,6 @@
 import 'package:weather_app/data/models/country/country_model.dart';
 import 'package:weather_app/data/models/country/region_model.dart';
-import 'package:weather_app/data/models/weather/model_fields.dart';
+import 'package:weather_app/data/models/storage/model_fields.dart';
 
 class WeatherEvent {}
 

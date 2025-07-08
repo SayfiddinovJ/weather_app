@@ -19,6 +19,12 @@ class CurrentModel {
   final int cloud;
   final double feelsLikeC;
   final double feelsLikeF;
+  final double windchillC;
+  final double windchillF;
+  final double heatIndexC;
+  final double heatIndexF;
+  final double dewPointC;
+  final double dewPointF;
   final double visKm;
   final double visMiles;
   final double uv;
@@ -44,6 +50,12 @@ class CurrentModel {
     required this.cloud,
     required this.feelsLikeC,
     required this.feelsLikeF,
+    required this.windchillC,
+    required this.windchillF,
+    required this.heatIndexC,
+    required this.heatIndexF,
+    required this.dewPointC,
+    required this.dewPointF,
     required this.visKm,
     required this.visMiles,
     required this.uv,
@@ -70,6 +82,12 @@ class CurrentModel {
     cloud: json['cloud'] ?? 0,
     feelsLikeC: json['feelslike_c'] ?? 0,
     feelsLikeF: json['feelslike_f'] ?? 0,
+    windchillC: json['windchill_c'] ?? 0,
+    windchillF: json['windchill_f'] ?? 0,
+    heatIndexC: json['heatindex_c'] ?? 0,
+    heatIndexF: json['heatindex_f'] ?? 0,
+    dewPointC: json['dewpoint_c'] ?? 0,
+    dewPointF: json['dewpoint_f'] ?? 0,
     visKm: json['vis_km'] ?? 0,
     visMiles: json['vis_miles'] ?? 0,
     uv: json['uv'] ?? 0,

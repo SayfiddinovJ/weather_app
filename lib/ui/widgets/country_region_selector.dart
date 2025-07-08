@@ -6,7 +6,7 @@ import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/bloc/weather_event.dart';
 import 'package:weather_app/data/models/country/country_model.dart';
 import 'package:weather_app/data/models/country/region_model.dart';
-import 'package:weather_app/data/models/weather/model_fields.dart';
+import 'package:weather_app/data/models/storage/model_fields.dart';
 import 'package:weather_app/data/storage/storage_repo.dart';
 import 'package:weather_app/routes/app_route.dart';
 import 'package:weather_app/utils/extensions/extension.dart';
@@ -107,6 +107,7 @@ class _CountryRegionSelectorState extends State<CountryRegionSelector> {
                       ),
                     ),
                   );
+                  context.read<WeatherBloc>().add(GetWeatherEvent());
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     Routes.home,

@@ -50,12 +50,19 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
               cloud: 0,
               feelsLikeC: 0,
               feelsLikeF: 0,
+              windchillC: 0,
+              windchillF: 0,
+              heatIndexC: 0,
+              heatIndexF: 0,
+              dewPointC: 0,
+              dewPointF: 0,
               visKm: 0,
               visMiles: 0,
               uv: 0,
               gustMph: 0,
               gustKph: 0,
             ),
+            forecastModel: [],
           ),
           countryModel: CountryModel(
             countryName: '',
@@ -87,7 +94,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     emit(state.copyWith(status: Status.loading));
     String cityName = StorageRepository.getString('cityName');
     UniversalData data = await weatherRepository.getWeather(cityName);
-    print('Data: ${data.error}');
     if (data.error.isEmpty) {
       emit(state.copyWith(status: Status.success, weather: data.data!));
     } else {

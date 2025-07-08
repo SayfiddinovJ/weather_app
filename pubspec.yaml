@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
-  skeletonizer: ^2.0.1
   flutter_screenutil: ^5.9.3
   flutter_bloc: ^9.1.1
   flutter_svg: ^2.2.0
