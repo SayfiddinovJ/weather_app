@@ -1,19 +1,19 @@
 import 'package:weather_app/data/models/weather/condition_model.dart';
 
 class DayModel {
-  final int? maxTempC;
-  final int? maxTempF;
-  final int? minTempC;
-  final int? minTempF;
-  final int? avgTempC;
-  final int? avgTempF;
-  final int? maxWindMph;
-  final int? maxWindKph;
-  final int? totalPrecipMm;
-  final int? totalPrecipIn;
-  final int? totalSnowCm;
-  final int? avgVisKm;
-  final int? avgVisMiles;
+  final double? maxTempC;
+  final double? maxTempF;
+  final double? minTempC;
+  final double? minTempF;
+  final double? avgTempC;
+  final double? avgTempF;
+  final double? maxWindMph;
+  final double? maxWindKph;
+  final double? totalPreCipMm;
+  final double? totalPreCipIn;
+  final double? totalSnowCm;
+  final double? avgVisKm;
+  final double? avgVisMiles;
   final int? avgHumidity;
   final int? dailyWillItRain;
   final int? dailyChanceOfRain;
@@ -31,8 +31,8 @@ class DayModel {
     required this.avgTempF,
     required this.maxWindMph,
     required this.maxWindKph,
-    required this.totalPrecipMm,
-    required this.totalPrecipIn,
+    required this.totalPreCipMm,
+    required this.totalPreCipIn,
     required this.totalSnowCm,
     required this.avgVisKm,
     required this.avgVisMiles,
@@ -54,8 +54,8 @@ class DayModel {
     avgTempF: json['avgtemp_f'] ?? 0,
     maxWindMph: json['maxwind_mph'] ?? 0,
     maxWindKph: json['maxwind_kph'] ?? 0,
-    totalPrecipMm: json['totalprecip_mm'] ?? 0,
-    totalPrecipIn: json['totalprecip_in'] ?? 0,
+    totalPreCipMm: json['totalprecip_mm'] ?? 0,
+    totalPreCipIn: json['totalprecip_in'] ?? 0,
     totalSnowCm: json['totalsnow_cm'] ?? 0,
     avgVisKm: json['avgvis_km'] ?? 0,
     avgVisMiles: json['avgvis_miles'] ?? 0,

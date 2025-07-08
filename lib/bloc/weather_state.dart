@@ -1,6 +1,5 @@
 import 'package:weather_app/data/models/country/country_model.dart';
 import 'package:weather_app/data/models/country/region_model.dart';
-import 'package:weather_app/data/models/storage/model_fields.dart';
 import 'package:weather_app/data/models/weather/weather_model.dart';
 import 'package:weather_app/data/status.dart';
 
@@ -8,7 +7,6 @@ class WeatherState {
   final WeatherModel weather;
   final CountryModel countryModel;
   final List<CountryModel> countries;
-  final List<StorageModel> storageList;
   final CountryModel selectedCountry;
   final RegionModel selectedRegion;
   final String cityName;
@@ -19,7 +17,6 @@ class WeatherState {
     required this.weather,
     required this.countryModel,
     required this.countries,
-    required this.storageList,
     required this.selectedCountry,
     required this.selectedRegion,
     required this.cityName,
@@ -31,7 +28,6 @@ class WeatherState {
     WeatherModel? weather,
     CountryModel? countryModel,
     List<CountryModel>? countries,
-    List<StorageModel>? storageList,
     CountryModel? selectedCountry,
     RegionModel? selectedRegion,
     String? cityName,
@@ -42,7 +38,6 @@ class WeatherState {
       weather: weather ?? this.weather,
       countryModel: countryModel ?? this.countryModel,
       countries: countries ?? this.countries,
-      storageList: storageList ?? this.storageList,
       selectedCountry: selectedCountry ?? this.selectedCountry,
       selectedRegion: selectedRegion ?? this.selectedRegion,
       cityName: cityName ?? this.cityName,
@@ -57,7 +52,6 @@ class WeatherState {
     weather: $weather, 
     countryModel: $countryModel, 
     countries: $countries,
-    storageList: $storageList,
     selectedCountry: $selectedCountry, 
     selectedRegion: $selectedRegion,
     cityName: $cityName, 

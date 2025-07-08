@@ -77,14 +77,11 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
             regions: [],
           ),
           selectedRegion: RegionModel(name: '', shortCode: ''),
-          storageList: [],
         ),
       ) {
     on<WeatherEvent>((event, emit) {});
     on<GetWeatherEvent>(getCurrentWeather);
-    on<GetCountriesFromStorageEvent>(getCountriesFromStorage);
     on<GetCountriesFromJsonEvent>(getCountriesFromJson);
-    on<AddRegionToStorageEvent>(addRegionToStorage);
   }
 
   Future<void> getCurrentWeather(
@@ -101,19 +98,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     }
   }
 
-  Future<void> getCountriesFromStorage(
-    GetCountriesFromStorageEvent event,
-    Emitter<WeatherState> emit,
-  ) async {
-    emit(state.copyWith(status: Status.loading));
-    UniversalData data = await weatherRepository.getCountriesFromStorage();
-    if (data.error.isEmpty) {
-      emit(state.copyWith(status: Status.success, storageList: data.data!));
-    } else {
-      emit(state.copyWith(status: Status.error, error: data.error));
-    }
-  }
-
   Future<void> getCountriesFromJson(
     GetCountriesFromJsonEvent event,
     Emitter<WeatherState> emit,
@@ -122,21 +106,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     UniversalData data = await weatherRepository.getCountriesFromJson();
     if (data.error.isEmpty) {
       emit(state.copyWith(status: Status.success, countries: data.data!));
-    } else {
-      emit(state.copyWith(status: Status.error, error: data.error));
-    }
-  }
-
-  Future<void> addRegionToStorage(
-    AddRegionToStorageEvent event,
-    Emitter<WeatherState> emit,
-  ) async {
-    emit(state.copyWith(status: Status.loading));
-    UniversalData data = await weatherRepository.addRegionToStorage(
-      event.storageModel,
-    );
-    if (data.error.isEmpty) {
-      emit(state.copyWith(status: Status.success));
     } else {
       emit(state.copyWith(status: Status.error, error: data.error));
     }

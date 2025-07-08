@@ -6,7 +6,6 @@ import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/bloc/weather_event.dart';
 import 'package:weather_app/data/models/country/country_model.dart';
 import 'package:weather_app/data/models/country/region_model.dart';
-import 'package:weather_app/data/models/storage/model_fields.dart';
 import 'package:weather_app/data/storage/storage_repo.dart';
 import 'package:weather_app/routes/app_route.dart';
 import 'package:weather_app/utils/extensions/extension.dart';
@@ -99,13 +98,10 @@ class _CountryRegionSelectorState extends State<CountryRegionSelector> {
               onPressed: () {
                 if (selectedRegion!.name.isNotEmpty) {
                   StorageRepository.putString('cityName', selectedRegion!.name);
-                  context.read<WeatherBloc>().add(
-                    AddRegionToStorageEvent(
-                      storageModel: StorageModel(
-                        region: selectedRegion!.name,
-                        country: selectedCountry!.countryName,
-                      ),
-                    ),
+                  List<String> cities = StorageRepository.getList('cities');
+                  StorageRepository.putList(
+                    'cities',
+                    cities..add(selectedRegion!.name),
                   );
                   context.read<WeatherBloc>().add(GetWeatherEvent());
                   Navigator.pushNamedAndRemoveUntil(

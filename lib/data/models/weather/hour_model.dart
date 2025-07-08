@@ -8,17 +8,17 @@ class HourModel {
   final int isDay;
   final ConditionModel condition;
   final double windMph;
-  final int windKph;
+  final double windKph;
   final int windDegree;
   final String windDir;
   final double pressureMb;
   final double pressureIn;
-  final double precipMm;
-  final double precipIn;
+  final double preCipMm;
+  final double preCipIn;
   final int humidity;
   final int cloud;
-  final double feelslikeC;
-  final double feelslikeF;
+  final double feelsLikeC;
+  final double feelsLikeF;
   final double windchillC;
   final double windchillF;
   final double heatindexC;
@@ -31,9 +31,9 @@ class HourModel {
   final int chanceOfSnow;
   final double visKm;
   final double visMiles;
-  final int gustMph;
-  final int gustKph;
-  final int uv;
+  final double gustMph;
+  final double gustKph;
+  final num uv;
 
   HourModel({
     required this.timeEpoch,
@@ -48,12 +48,12 @@ class HourModel {
     required this.windDir,
     required this.pressureMb,
     required this.pressureIn,
-    required this.precipMm,
-    required this.precipIn,
+    required this.preCipMm,
+    required this.preCipIn,
     required this.humidity,
     required this.cloud,
-    required this.feelslikeC,
-    required this.feelslikeF,
+    required this.feelsLikeC,
+    required this.feelsLikeF,
     required this.windchillC,
     required this.windchillF,
     required this.heatindexC,
@@ -85,12 +85,12 @@ class HourModel {
       windDir: json['wind_dir'] ?? '',
       pressureMb: json['pressure_mb'] ?? 0.0,
       pressureIn: json['pressure_in'] ?? 0.0,
-      precipMm: json['precip_mm'] ?? 0.0,
-      precipIn: json['precip_in'] ?? 0.0,
+      preCipMm: json['precip_mm'] ?? 0.0,
+      preCipIn: json['precip_in'] ?? 0.0,
       humidity: json['humidity'] ?? 0,
       cloud: json['cloud'] ?? 0,
-      feelslikeC: json['feelslike_c'] ?? 0.0,
-      feelslikeF: json['feelslike_f'] ?? 0.0,
+      feelsLikeC: json['feelslike_c'] ?? 0.0,
+      feelsLikeF: json['feelslike_f'] ?? 0.0,
       windchillC: json['windchill_c'] ?? 0.0,
       windchillF: json['windchill_f'] ?? 0.0,
       heatindexC: json['heatindex_c'] ?? 0.0,

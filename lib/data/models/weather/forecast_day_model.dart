@@ -23,11 +23,9 @@ class ForecastDayModel {
       dateEpoch: json['date_epoch'] ?? 0,
       day: DayModel.fromJson(json['day']),
       astro: AstroModel.fromJson(json['astro']),
-      hour:
-          List<HourModel>.from(
-            json['hour'].map((x) => HourModel.fromJson(x)),
-          ) ??
-          [],
+      hour: List<HourModel>.from(
+        json['hour'].map((x) => HourModel.fromJson(x)),
+      ),
     );
   }
 }
