@@ -5,6 +5,7 @@ import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/bloc/weather_event.dart';
 import 'package:weather_app/bloc/weather_state.dart';
 import 'package:weather_app/data/status.dart';
+import 'package:weather_app/data/storage/storage_repo.dart';
 import 'package:weather_app/routes/app_route.dart';
 import 'package:weather_app/ui/locations/widgets/locations_item.dart';
 import 'package:weather_app/utils/theme/app_theme.dart';
@@ -41,24 +42,46 @@ class LocationsScreen extends StatelessWidget {
           } else if (state.status == Status.error) {
             return Center(child: Text(state.error));
           } else if (state.status == Status.success) {
+            List<String> cities = StorageRepository.getList('cities');
+            String currentCity = StorageRepository.getString('cityName');
             return ListView.builder(
-              itemCount: state.countries.length,
+              itemCount: cities.length,
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20.w,
-                    vertical: 10.h,
-                  ),
-                  child: InkWell(
-                    onTap: () {
+                return Dismissible(
+                  key: UniqueKey(),
+                  onDismissed: (direction) {
+                    cities.removeAt(index);
+                    StorageRepository.putList('cities', cities);
+                    StorageRepository.putString('cityName', cities[0]);
+                    cities = StorageRepository.getList('cities');
+                    if (cities.isNotEmpty) {
                       context.read<WeatherBloc>().add(GetWeatherEvent());
-                      Navigator.pop(context);
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        Routes.home,
+                        (route) => false,
+                      );
+                    } else {
+                      StorageRepository.putString('cityName', '');
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        Routes.cityAdd,
+                        (route) => false,
+                      );
+                    }
+                  },
+                  child: LocationsItem(
+                    title: cities[index],
+                    isSelected: currentCity == cities[index],
+                    onTap: () {
+                      StorageRepository.putString('cityName', cities[index]);
+                      context.read<WeatherBloc>().add(GetWeatherEvent());
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        Routes.home,
+                        (route) => false,
+                      );
                     },
-                    child: LocationsItem(
-                      title: state.countryModel.countryName,
-                      isSelected: false,
-                      onTap: () {},
-                    ),
                   ),
                 );
               },

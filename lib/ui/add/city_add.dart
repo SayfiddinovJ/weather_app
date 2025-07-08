@@ -42,11 +42,7 @@ class _CityAddScreenState extends State<CityAddScreen> {
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: CountryRegionSelector(
                 countries: state.countries,
-                onChanged: (countryName, region) {
-                  print(
-                    'Selected country: $countryName\nSelected region: $region',
-                  );
-                },
+                onChanged: (countryName, region) {},
               ),
             );
           } else {

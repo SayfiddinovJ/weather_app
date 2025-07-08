@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather_app/routes/app_route.dart';
 import 'package:weather_app/ui/details/widgets/details_text.dart';
+import 'package:weather_app/ui/widgets/app_bar_actions.dart';
 import 'package:weather_app/utils/extensions/extension.dart';
 import 'package:weather_app/utils/theme/app_theme.dart';
 
@@ -28,21 +29,7 @@ class DetailsScreen extends StatelessWidget {
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.locations);
-            },
-            icon: const Icon(Icons.map_outlined, color: AppColors.gray),
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.settings);
-            },
-            icon: const Icon(Icons.settings, color: AppColors.gray),
-          ),
-          10.pw,
-        ],
+        actions: [AppBarActions()],
       ),
       body: SingleChildScrollView(
         padding: EdgeInsetsGeometry.symmetric(vertical: 24.h, horizontal: 24.w),

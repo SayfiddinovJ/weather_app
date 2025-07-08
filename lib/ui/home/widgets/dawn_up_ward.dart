@@ -16,13 +16,13 @@ class DawnUpWard extends StatelessWidget {
       children: [
         Icon(Icons.arrow_downward, color: AppColors.gray, size: 21.w),
         Text(
-          '${weather.currentModel.tempC}°C',
+          '${weather.forecastModel[0].day.minTempC}°C',
           style: TextStyle(fontSize: 21.sp, color: AppColors.gray),
         ),
         20.pw,
         Icon(Icons.arrow_upward, color: AppColors.gray, size: 21.w),
         Text(
-          '${weather.currentModel.tempC}°C',
+          '${weather.forecastModel[0].day.maxTempC}°C',
           style: TextStyle(fontSize: 21.sp, color: AppColors.gray),
         ),
       ],

@@ -85,7 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       50.ph,
                       Text(
-                        weather.locationModel.localtime,
+                        'Last updated: ${weather.locationModel.localtime}',
+                        softWrap: true,
                         style: TextStyle(
                           fontSize: 18.sp,
                           color: AppColors.gray,
@@ -105,7 +106,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 150.w,
                         fit: BoxFit.cover,
                         errorBuilder: (c, o, s) {
-                          return Icon(Icons.photo, size: 150.w);
+                          return Icon(
+                            Icons.photo_size_select_actual_outlined,
+                            size: 150.w,
+                          );
                         },
                       ),
                       20.ph,
@@ -117,7 +121,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       20.ph,
-                      SunRiseSet(),
+                      SunRiseSet(astro: weather.forecastModel[0].astro),
+                      30.ph,
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, Routes.details);
+                        },
+                        child: Text('More'),
+                      ),
                     ],
                   ),
                 ),

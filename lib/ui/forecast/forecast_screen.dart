@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:weather_app/routes/app_route.dart';
 import 'package:weather_app/ui/forecast/widgets/daily_item.dart';
 import 'package:weather_app/ui/forecast/widgets/hourly_item.dart';
+import 'package:weather_app/ui/widgets/app_bar_actions.dart';
 import 'package:weather_app/utils/extensions/extension.dart';
 import 'package:weather_app/utils/icons/app_icons.dart';
 import 'package:weather_app/utils/theme/app_theme.dart';
@@ -30,21 +30,7 @@ class ForecastScreen extends StatelessWidget {
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.locations);
-            },
-            icon: const Icon(Icons.map_outlined, color: AppColors.gray),
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.settings);
-            },
-            icon: const Icon(Icons.settings, color: AppColors.gray),
-          ),
-          10.pw,
-        ],
+        actions: [AppBarActions()],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -96,6 +96,11 @@ class _CountryRegionSelectorState extends State<CountryRegionSelector> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
+                if (selectedRegion == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Please select a region')),
+                  );
+                }
                 if (selectedRegion!.name.isNotEmpty) {
                   StorageRepository.putString('cityName', selectedRegion!.name);
                   List<String> cities = StorageRepository.getList('cities');
