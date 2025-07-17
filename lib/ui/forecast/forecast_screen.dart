@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:weather_app/data/models/weather/forecast_day_model.dart';
+import 'package:weather_app/data/storage/storage_repo.dart';
 import 'package:weather_app/ui/forecast/widgets/daily_item.dart';
 import 'package:weather_app/ui/forecast/widgets/hourly_item.dart';
 import 'package:weather_app/ui/widgets/app_bar_actions.dart';
@@ -8,7 +10,9 @@ import 'package:weather_app/utils/icons/app_icons.dart';
 import 'package:weather_app/utils/theme/app_theme.dart';
 
 class ForecastScreen extends StatelessWidget {
-  const ForecastScreen({super.key});
+  const ForecastScreen({super.key, required this.forecastDay});
+
+  final List<ForecastDayModel> forecastDay;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,10 @@ class ForecastScreen extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('City name', style: TextStyle(fontSize: 18.sp)),
+            Text(
+              StorageRepository.getString('cityName'),
+              style: TextStyle(fontSize: 18.sp),
+            ),
             Text(
               'Current location',
               style: TextStyle(fontSize: 10.sp, color: AppColors.gray),

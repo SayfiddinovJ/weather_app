@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       200.ph,
-                      Center(child: Text(state.error)),
+                      Center(child: Text('Something went wrong, please try again')),
                       10.ph,
                       ElevatedButton(
                         onPressed: () async {
@@ -79,13 +79,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, Routes.details);
+                    Navigator.pushNamed(
+                      context,
+                      Routes.details,
+                      arguments: weather,
+                    );
                   },
                   child: Column(
                     children: [
                       50.ph,
                       Text(
-                        'Last updated: ${weather.locationModel.localtime}',
+                        'Last updated: ${weather.locationModel.localtime.substring(10, 16)}',
                         softWrap: true,
                         style: TextStyle(
                           fontSize: 18.sp,
@@ -123,11 +127,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       20.ph,
                       SunRiseSet(astro: weather.forecastModel[0].astro),
                       30.ph,
+                      Text(
+                        '${weather.locationModel.name}, ${weather.locationModel.country}',
+                      ),
+                      Text(weather.locationModel.localtime.substring(0, 10)),
+                      30.ph,
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, Routes.details);
+                          Navigator.pushNamed(
+                            context,
+                            Routes.details,
+                            arguments: weather,
+                          );
                         },
-                        child: Text('More'),
+                        child: Text('See more'),
                       ),
                     ],
                   ),

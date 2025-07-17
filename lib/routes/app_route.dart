@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/data/models/weather/forecast_day_model.dart';
+import 'package:weather_app/data/models/weather/weather_model.dart';
 import 'package:weather_app/ui/details/details_screen.dart';
 import 'package:weather_app/ui/forecast/forecast_screen.dart';
 import 'package:weather_app/ui/home/home_screen.dart';
@@ -28,9 +30,18 @@ class Pages {
       case Routes.home:
         return CupertinoPageRoute(builder: (context) => const HomeScreen());
       case Routes.forecast:
-        return CupertinoPageRoute(builder: (context) => const ForecastScreen());
+        return CupertinoPageRoute(
+          builder:
+              (context) => ForecastScreen(
+                forecastDay: settings.arguments as List<ForecastDayModel>,
+              ),
+        );
       case Routes.details:
-        return CupertinoPageRoute(builder: (context) => const DetailsScreen());
+        return CupertinoPageRoute(
+          builder:
+              (context) =>
+                  DetailsScreen(weather: settings.arguments as WeatherModel),
+        );
       case Routes.settings:
         return CupertinoPageRoute(builder: (context) => const SettingsScreen());
       case Routes.locations:

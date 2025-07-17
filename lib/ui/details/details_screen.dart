@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:weather_app/data/models/weather/weather_model.dart';
+import 'package:weather_app/data/storage/storage_repo.dart';
 import 'package:weather_app/routes/app_route.dart';
 import 'package:weather_app/ui/details/widgets/details_text.dart';
 import 'package:weather_app/ui/widgets/app_bar_actions.dart';
@@ -7,7 +9,9 @@ import 'package:weather_app/utils/extensions/extension.dart';
 import 'package:weather_app/utils/theme/app_theme.dart';
 
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({super.key});
+  const DetailsScreen({super.key, required this.weather});
+
+  final WeatherModel weather;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,10 @@ class DetailsScreen extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('City name', style: TextStyle(fontSize: 18.sp)),
+            Text(
+              StorageRepository.getString('cityName'),
+              style: TextStyle(fontSize: 18.sp),
+            ),
             Text(
               'Current location',
               style: TextStyle(fontSize: 10.sp, color: AppColors.gray),
@@ -43,7 +50,11 @@ class DetailsScreen extends StatelessWidget {
                 const Spacer(),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, Routes.forecast);
+                    Navigator.pushNamed(
+                      context,
+                      Routes.forecast,
+                      arguments: weather.forecastModel,
+                    );
                   },
                   child: Text(
                     'Forecast',
@@ -53,12 +64,31 @@ class DetailsScreen extends StatelessWidget {
               ],
             ),
             20.ph,
-            DetailsText(title: 'Precipitation', value: '0.0 mm'),
-            DetailsText(title: 'SE Wind', value: '10.23 km/h'),
-            DetailsText(title: 'Humidity', value: '56 %'),
-            DetailsText(title: 'Visibility', value: '14.83 km'),
-            DetailsText(title: 'UV', value: 'Lowest'),
-            DetailsText(title: 'Pressure', value: '1012 hPa'),
+            DetailsText(
+              title: 'Precipitation',
+              value: '${weather.currentModel.preCipMm} mm',
+            ),
+            DetailsText(
+              title: 'SE Wind',
+              value: '${weather.currentModel.windKph} km/h',
+            ),
+            DetailsText(
+              title: 'Humidity',
+              value: '${weather.currentModel.humidity} %',
+            ),
+            DetailsText(
+              title: 'Visibility',
+              value: '${weather.currentModel.visKm} km',
+            ),
+            DetailsText(title: 'UV', value: '${weather.currentModel.uv}'),
+            DetailsText(
+              title: 'Pressure',
+              value: '${weather.currentModel.pressureMb} hPa',
+            ),
+            DetailsText(
+              title: 'Feels like',
+              value: '${weather.currentModel.feelsLikeC}°c',
+            ),
           ],
         ),
       ),

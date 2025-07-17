@@ -3,15 +3,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/bloc/weather_event.dart';
-import 'package:weather_app/bloc/weather_state.dart';
-import 'package:weather_app/data/status.dart';
 import 'package:weather_app/data/storage/storage_repo.dart';
 import 'package:weather_app/routes/app_route.dart';
 import 'package:weather_app/ui/locations/widgets/locations_item.dart';
 import 'package:weather_app/utils/theme/app_theme.dart';
 
-class LocationsScreen extends StatelessWidget {
+class LocationsScreen extends StatefulWidget {
   const LocationsScreen({super.key});
+
+  @override
+  State<LocationsScreen> createState() => _LocationsScreenState();
+}
+
+class _LocationsScreenState extends State<LocationsScreen> {
+  List<String> cities = StorageRepository.getList('cities');
+  String currentCity = StorageRepository.getString('cityName');
 
   @override
   Widget build(BuildContext context) {
@@ -35,60 +41,46 @@ class LocationsScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<WeatherBloc, WeatherState>(
-        builder: (context, state) {
-          if (state.status == Status.loading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state.status == Status.error) {
-            return Center(child: Text(state.error));
-          } else if (state.status == Status.success) {
-            List<String> cities = StorageRepository.getList('cities');
-            String currentCity = StorageRepository.getString('cityName');
-            return ListView.builder(
-              itemCount: cities.length,
-              itemBuilder: (context, index) {
-                return Dismissible(
-                  key: UniqueKey(),
-                  onDismissed: (direction) {
-                    cities.removeAt(index);
-                    StorageRepository.putList('cities', cities);
-                    StorageRepository.putString('cityName', cities[0]);
-                    cities = StorageRepository.getList('cities');
-                    if (cities.isNotEmpty) {
-                      context.read<WeatherBloc>().add(GetWeatherEvent());
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        Routes.home,
-                        (route) => false,
-                      );
-                    } else {
-                      StorageRepository.putString('cityName', '');
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        Routes.cityAdd,
-                        (route) => false,
-                      );
-                    }
-                  },
-                  child: LocationsItem(
-                    title: cities[index],
-                    isSelected: currentCity == cities[index],
-                    onTap: () {
-                      StorageRepository.putString('cityName', cities[index]);
-                      context.read<WeatherBloc>().add(GetWeatherEvent());
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        Routes.home,
-                        (route) => false,
-                      );
-                    },
-                  ),
+      body: ListView.builder(
+        itemCount: cities.length,
+        itemBuilder: (context, index) {
+          return Dismissible(
+            key: UniqueKey(),
+            onDismissed: (direction) {
+              cities.removeAt(index);
+              StorageRepository.putList('cities', cities);
+              StorageRepository.putString('cityName', cities[0]);
+              cities = StorageRepository.getList('cities');
+              if (cities.isNotEmpty) {
+                context.read<WeatherBloc>().add(GetWeatherEvent());
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Routes.home,
+                  (route) => false,
+                );
+              } else {
+                StorageRepository.putString('cityName', '');
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Routes.cityAdd,
+                  (route) => false,
+                );
+              }
+            },
+            child: LocationsItem(
+              title: cities[index],
+              isSelected: currentCity == cities[index],
+              onTap: () {
+                StorageRepository.putString('cityName', cities[index]);
+                context.read<WeatherBloc>().add(GetWeatherEvent());
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Routes.home,
+                  (route) => false,
                 );
               },
-            );
-          } else {
-            return const Center(child: Text(''));
-          }
+            ),
+          );
         },
       ),
     );

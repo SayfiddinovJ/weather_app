@@ -13,4 +13,5 @@ class AppIcons {
   static const String rain = "assets/icons/wi-rain.svg";
   static const String snow = "assets/icons/wi-snow.svg";
   static const String windy = "assets/icons/wi-windy.svg";
+  static const String icon = "assets/icons/icon.png";
 }
